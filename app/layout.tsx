@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Outfit, Oxanium } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/provider/theme-provider";
 
 const oxaniumHeading = Oxanium({
   subsets: ["latin"],
@@ -43,9 +44,19 @@ export default function RootLayout({
         outfit.variable,
         oxaniumHeading.variable,
       )}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );
