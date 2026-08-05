@@ -15,9 +15,11 @@ const ProblemsPage = async () => {
     );
   }
 
-  return <div className="container mx-auto py-32">
-    <ProblemsTable problems={problems} user={user}/>
-  </div>;
+  return (
+    <div className="container mx-auto py-32">
+      <ProblemsTable problems={problems} user={user} />
+    </div>
+  );
 };
 
 export default ProblemsPage;
