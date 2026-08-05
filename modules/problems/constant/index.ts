@@ -13,6 +13,29 @@ export const DIFFICULTY_COLORS = {
   HARD: "bg-red-100 text-red-800 hover:bg-red-100",
 };
 
-export const getDifficultyColor = (difficulty: keyof typeof DIFFICULTY_COLORS) => {
+export const getDifficultyColor = (
+  difficulty: keyof typeof DIFFICULTY_COLORS,
+) => {
   return DIFFICULTY_COLORS[difficulty] || "";
+};
+
+export const LANGUAGE_OPTIONS = [
+  { value: "JAVASCRIPT", label: "JavaScript" },
+  { value: "PYTHON", label: "Python" },
+  { value: "JAVA", label: "Java" },
+];
+
+export function getEditorLanguage(language: string) {
+  return language.toLowerCase();
+}
+
+export const EDITOR_OPTIONS = {
+  minimap: { enabled: false },
+  fontSize: 16,
+  lineNumbers: "on",
+  roundedSelection: false,
+  scrollBeyondLastLine: false,
+  automaticLayout: true,
+  tabSize: 2,
+  wordWrap: "on",
 };
