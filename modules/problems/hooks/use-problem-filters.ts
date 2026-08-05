@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 
 export function useProblemFilters(problems = []) {
+  console.log("useProblemFilters called with problems:", problems);
   const [search, setSearch] = useState("");
-  const [difficulty, setDifficulty] = useState("All");
-  const [selectedTag, setSelectedTag] = useState("All");
+  const [difficulty, setDifficulty] = useState("ALL");
+  const [selectedTag, setSelectedTag] = useState("ALL");
 
   const allTags = useMemo(() => {
     const tagsSet = new Set();
@@ -18,12 +19,14 @@ export function useProblemFilters(problems = []) {
         problem.title.toLowerCase().includes(search.toLowerCase()),
       )
       .filter((problem) =>
-        difficulty === "All" ? true : problem.difficulty === difficulty,
+        difficulty === "ALL" ? true : problem.difficulty === difficulty,
       )
       .filter((problem) =>
-        selectedTag === "All" ? true : problem.tags?.includes(selectedTag),
+        selectedTag === "ALL" ? true : problem.tags?.includes(selectedTag),
       );
   }, [problems, search, difficulty, selectedTag]);
+
+  console.log("Filtered Problems in useProblemFilters:", filteredProblems);
 
   return {
     search,
@@ -35,6 +38,6 @@ export function useProblemFilters(problems = []) {
     setDifficulty,
     setSelectedTag,
 
-    filteredProblems
+    filteredProblems,
   };
 }

@@ -7,7 +7,7 @@ export const getAllProblems = async () => {
   try {
     const user = await getCurrentUserData();
 
-    const problems = prisma.problem.findMany({
+    const problems = await prisma.problem.findMany({
       orderBy: {
         createdAt: "desc",
       },
