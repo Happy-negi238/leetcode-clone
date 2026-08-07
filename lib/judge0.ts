@@ -10,6 +10,18 @@ export function getJudge0LanguageId(language: string) {
   return languageMap[language.toUpperCase()];
 }
 
+export function getLanguageName(languageId: number) {
+  const LANGUAGE_NAMES = {
+    71: "Python",
+    63: "Javascript",
+    62: "Java",
+  };
+
+  return LANGUAGE_NAMES[
+    (languageId as keyof typeof LANGUAGE_NAMES) || "unknown"
+  ];
+}
+
 export async function submitBatch(submissions: any) {
   const options = {
     method: "POST",
@@ -42,7 +54,7 @@ export async function pollBatchResults(tokens: string[]) {
       url: "https://judge0-extra-ce1.p.rapidapi.com/submissions/batch",
       params: {
         tokens: tokens.join(","),
-        base64_encoded: "true",
+        base64_encoded: "false",
         fields: "*",
       },
       headers: {

@@ -2,17 +2,20 @@
 
 import { Spinner } from "@/components/ui/spinner";
 import { CodeEditorPanel } from "@/modules/problems/components/code-editor-panel";
+import { ExecutionResults } from "@/modules/problems/components/execution-results";
 import { ProblemDescription } from "@/modules/problems/components/problem-description";
 import { ProblemHeader } from "@/modules/problems/components/problem-header";
 import { ProblemTabs } from "@/modules/problems/components/problem-tabs";
 import TestCasesPanel from "@/modules/problems/components/testcases-panel";
 import { useEditor } from "@/modules/problems/hooks/use-editor";
 import { useProblem } from "@/modules/problems/hooks/use-problem";
+import { useSubmissionHistory } from "@/modules/problems/hooks/use-submission-history";
 import { useParams } from "next/navigation";
 
 const ProblemIdPage = () => {
   const params = useParams<{ id: string }>();
   const { problem, isLoading } = useProblem(params.id);
+  const { submissionHistory } = useSubmissionHistory(params.id);
   const {
     selectedLanguage,
     setSelectedLanguage,
@@ -44,7 +47,7 @@ const ProblemIdPage = () => {
               problem={problem}
               selectedLanguage={"JAVASCRIPT"}
             />
-            <ProblemTabs problem={problem} />
+            <ProblemTabs problem={problem} submissionHistory={submissionHistory} />
           </div>
 
           {/* RIGHT Panel */}
@@ -61,9 +64,10 @@ const ProblemIdPage = () => {
             />
 
             {/* @ts-ignore */}
-            <TestCasesPanel testCases={problem.testCases}/>
+            <TestCasesPanel testCases={problem.testCases} />
 
             {/* TODO: Execution result */}
+            <ExecutionResults executionResponse={executionResponse} />
           </div>
         </div>
       </div>
