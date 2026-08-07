@@ -12,7 +12,7 @@ import { getDifficultyColor } from "../constant";
  * Single row in the problems table
  */
 export function ProblemRow({ problem, user, onDelete, onSave }) {
-  const isSolved = false;
+  const isSolved = problem.solvedBy?.length > 0;
 
   return (
     <TableRow>
