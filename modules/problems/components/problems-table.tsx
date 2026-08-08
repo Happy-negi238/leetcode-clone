@@ -15,15 +15,18 @@ import { usePagination } from "../hooks/use-pagination";
 import { ProblemRow } from "./problem-row";
 import { ProblemsEmpty } from "./problem-empty";
 import { ProblemsPagination } from "./problems-pagination";
+import { usePlaylistActions } from "@/modules/playlists/hooks/use-playlist-action";
+import { CreatePlaylistModel } from "@/modules/playlists/components/create-playlist";
+import { AddToPlaylistModel } from "@/modules/playlists/components/add-to-playlist";
 
 export const ProblemsTable = ({ problems = [], user }: any) => {
   const filters = useProblemFilters(problems);
   const pagination = usePagination(filters.filteredProblems);
-  // console.log(pagination);
+  const playlist = usePlaylistActions();
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 p-6">
-      <ProblemsHeader onCreatePlaylist={() => {}} />
+      <ProblemsHeader onCreatePlaylist={playlist.openCreateModel} />
       <ProblemsFilters
         search={filters.search}
         onSearchChange={filters.setSearch}
@@ -54,7 +57,7 @@ export const ProblemsTable = ({ problems = [], user }: any) => {
                     problem={problem}
                     user={user}
                     onDelete={() => {}}
-                    onSave={() => {}}
+                    onSave={playlist.openAddToPlaylist}
                   />
                 ))
               ) : (
@@ -76,6 +79,19 @@ export const ProblemsTable = ({ problems = [], user }: any) => {
           onNext={pagination.goToNextPage}
         />
       )}
+
+      <CreatePlaylistModel
+        isOpen={playlist.isCreateModalOpen}
+        onClose={playlist.closeCreateModel}
+        onSubmit={playlist.handleCreatePlaylist}
+      />
+
+      <AddToPlaylistModel
+        isOpen={playlist.isAddToPlaylistModalOpen}
+        onClose={playlist.closeAddToPlaylistModel}
+        onSubmit={playlist.handleAddToPlaylist}
+        problemId={playlist.selectedProblemId}
+      />
     </div>
   );
 };

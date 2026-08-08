@@ -77,6 +77,11 @@ export const getCurrentUserData = async () => {
       where: {
         clerkId: id,
       },
+      include: {
+        submissions: true,
+        solvedProblems: true,
+        playlists: true
+      }
     });
 
     return data;
